@@ -1,0 +1,14 @@
+using CopperStudios.Tools;
+using CopperStudios.Engine;
+
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+using System.Numerics;
+
+public class NewGameObject : GameObject
+{
+    public NewGameObject(string name = "unset")
+    {
+        this.name = name;
+    }
+}
