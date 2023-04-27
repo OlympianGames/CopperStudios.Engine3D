@@ -1,0 +1,21 @@
+using CopperStudios.Engine;
+using CopperStudios.UI;
+using ImGuiNET;
+
+public class NewUIPanel : UIPanel
+{
+    public NewUIPanel(string name = "unset")
+    {
+        this.name = name;
+    }
+
+    public override void UIUpdate()
+    {
+        
+    }
+
+    public override void Update()
+    {
+        
+    }
+}
