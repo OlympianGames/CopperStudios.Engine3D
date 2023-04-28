@@ -20,17 +20,18 @@ public static class Game
         // RegisterGameObject(new SineCubes());
         // RegisterGameObject(new PerlinCubes());
 
-        ModelEngine.LoadModel("Game/Resources/Models/bevel_cube.obj", "Bevel Cube");
-
-        Shader shader = LoadShader("resources/shaders/glsl330/base_lighting.vs", "resources/shaders/glsl330/lighting.fs");
+        // ModelEngine.LoadModel("Game/Resources/Models/bevel_cube.obj", "Bevel Cube");
 
     }
-
+   
+    
     /// <summary> First update called, used for changing values </summary>
     public static void Update()
     {
-        
+
     }
+
+
 
     /// <summary> Second update called, used for rendering UI </summary>
     public static void UIUpdate()

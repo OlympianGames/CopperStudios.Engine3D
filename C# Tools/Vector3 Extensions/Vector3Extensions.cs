@@ -18,5 +18,11 @@ namespace CopperStudios.Tools
         {
             return new Vector3(v.X, v.Z, value);
         }
+
+        public static float Magnitude(this Vector3 v)
+        {
+            // https://docs.unity3d.com/ScriptReference/Vector3-magnitude.html
+            return MathF.Sqrt( ( v.X * v.X + v.Y * v.Y + v.Z * v.Z) );
+        }
     }
 }

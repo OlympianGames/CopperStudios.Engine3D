@@ -19,6 +19,7 @@ public static class Program
     public static Action? actionTest;
 
     // Engine Actions
+    public static bool engineStartCalled = false;
     public static Action? EngineStart;
     public static Action? EngineUpdate;
     public static Action? EngineUIUpdate;
@@ -26,6 +27,7 @@ public static class Program
     public static Action? EngineEnd;
 
     // Game Actions
+    public static bool gameStartCalled = false;
     public static Action? GameStart;
     public static Action? GameUpdate;
     public static Action? GameUIUpdate;
@@ -47,8 +49,12 @@ public static class Program
         if(EngineStart != null)
             EngineStart?.Invoke();
 
+        engineStartCalled = true;
+
         if(GameStart != null)
             GameStart.Invoke();
+
+        gameStartCalled = true;
 
         // The UI Engine is started after everything else so gameobjects can register their own panels
         DebugEngine.Log("Starting UI Engine");
