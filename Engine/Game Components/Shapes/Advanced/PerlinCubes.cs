@@ -23,6 +23,7 @@ public class PerlinCubes : GameObject
     }
 
     public List<CubePrimitive> cubes = new List<CubePrimitive>();
+    public float gridSize = 50;
 
     public override void Start()
     {
@@ -30,14 +31,14 @@ public class PerlinCubes : GameObject
 
         cubes = new List<CubePrimitive>();
         
-        for (int x = 0; x < 9; x++)
+        for (int x = 0; x < gridSize; x++)
         {
-            for (int z = 0; z < 9; z++)
+            for (int z = 0; z < gridSize; z++)
             {
                 CubePrimitive cube = new CubePrimitive($"Perlin Cube");
                 cubes.Add(cube);
-                cube.transform.position.Z = z-4;
-                cube.transform.position.X = x-4;
+                cube.transform.position.Z = z;
+                cube.transform.position.X = x;
                 RegisterGameObject(cube);
             }
         }

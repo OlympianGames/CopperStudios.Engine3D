@@ -30,12 +30,14 @@ public class SineCubesPanel : UIPanel
         {
             ImGui.InputFloat("Speed", ref sineCubes.speed);
             ImGui.InputFloat("Amplitude", ref sineCubes.amplitude);
+            ImGui.InputFloat("Lerp Speed", ref sineCubes.lerpSpeed);
         }
 
         if(showSliders)
         {
             ImGui.SliderFloat("Speed", ref sineCubes.speed, -25, 25);
             ImGui.SliderFloat("Amplitude", ref sineCubes.amplitude, -25, 25);
+            ImGui.SliderFloat("Lerp Speed", ref sineCubes.lerpSpeed, 0, 10);
         }
 
         ImGui.Separator();

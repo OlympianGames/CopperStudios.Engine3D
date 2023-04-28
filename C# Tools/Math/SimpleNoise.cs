@@ -1,6 +1,7 @@
 using System;
 
 namespace CopperStudios.Tools;
+using static CopperStudios.Tools.CopperFloatMath;
 
 public class SimpleNoise
 {
@@ -54,10 +55,5 @@ public class SimpleNoise
         int n = x + z * 57 + seed;
         n = (n << 13) ^ n;
         return (1f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824f);
-    }
-
-    private float Lerp(float a, float b, float t)
-    {
-        return a + t * (b - a);
     }
 }

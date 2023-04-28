@@ -8,8 +8,11 @@ public class Transform
     public Vector3 position = Vector3.Zero;
 
     /// <summary> Rotation of the transform</summary>
-    public Quaternion rotation = Quaternion.Zero;
-
-    /// <summary> Scale of the transform </summary>
+    public Vector3 rotation = Vector3.Zero;
+    
+    /// <summary> Size of the transform</summary>
     public Vector3 scale = Vector3.One;
+
+
+    
 }

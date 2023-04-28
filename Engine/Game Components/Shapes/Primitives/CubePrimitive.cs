@@ -8,6 +8,7 @@ public class CubePrimitive : GameObject
 {
     public Color baseColor = Color.DARKGRAY;
     public Color edgeColor = Color.BLACK;
+
     public override void DrawUpdate()
     {
         DrawCubeV(transform.position, transform.scale, baseColor);

@@ -28,6 +28,8 @@ public abstract class GameObject
         Program.GameUIUpdate += UIUpdate;
         Program.GameDrawUpdate += DrawUpdate;
         Program.GameEnd += End;
+
+        if(Program.gameStartCalled) Start();
     }
 
     /// <summary> Registers a UI panel to be displayed via ImGUI</summary>

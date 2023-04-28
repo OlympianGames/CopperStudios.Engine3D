@@ -11,28 +11,33 @@ public class SineCubes : GameObject
 {
     public float speed = 1;
     public float amplitude = 1;
+    public float lerpSpeed = 1;
+
+    public float gridSize = 150;
 
     public SineCubes(string name = "Sine Cubes")
     {
         this.name = name;
     }
 
-    public List<CubePrimitive> cubes = new List<CubePrimitive>();
+    public List<GameObject> cubes = new List<GameObject>();
 
     public override void Start()
     {
         RegisterUIPanel(new SineCubesPanel(this));
 
-        cubes = new List<CubePrimitive>();
+        cubes = new List<GameObject>();
         
-        for (int x = 0; x < 9; x++)
+        for (int x = 0; x < gridSize; x++)
         {
-            for (int z = 0; z < 9; z++)
+            for (int z = 0; z < gridSize; z++)
             {
+
+                // CubeMeshPrimitive cube = new CubeMeshPrimitive($"Sine Cube");
                 CubePrimitive cube = new CubePrimitive($"Sine Cube");
                 cubes.Add(cube);
-                cube.transform.position.Z = z-4;
-                cube.transform.position.X = x-4;
+                cube.transform.position.Z = z;
+                cube.transform.position.X = x;
                 RegisterGameObject(cube);
             }
         }
@@ -42,10 +47,10 @@ public class SineCubes : GameObject
     {
         for (int i = 0; i < cubes.Count; i++)
         {
-            CubePrimitive cube = cubes[i];
+            GameObject cube = cubes[i];
             Vector3 pos = cube.transform.position;
 
-            pos.Y = MathF.Sin((TimeEngine.time + pos.X + pos.Z) * speed) * amplitude;
+            pos.Y = CopperFloatMath.Lerp(pos.Y, MathF.Sin((TimeEngine.time + pos.X + pos.Z) * speed) * amplitude, lerpSpeed * TimeEngine.deltaTime);
 
             cube.transform.position = pos;
         }
