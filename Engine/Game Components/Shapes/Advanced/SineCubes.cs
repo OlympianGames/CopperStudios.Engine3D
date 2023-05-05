@@ -13,7 +13,7 @@ public class SineCubes : GameObject
     public float amplitude = 1;
     public float lerpSpeed = 1;
 
-    public float gridSize = 150;
+    public float gridSize = 50;
 
     public SineCubes(string name = "Sine Cubes")
     {
@@ -36,8 +36,12 @@ public class SineCubes : GameObject
                 // CubeMeshPrimitive cube = new CubeMeshPrimitive($"Sine Cube");
                 CubePrimitive cube = new CubePrimitive($"Sine Cube");
                 cubes.Add(cube);
-                cube.transform.position.Z = z;
-                cube.transform.position.X = x;
+
+                Vector3 pos = cube.transform.position;
+                pos.Z = z;
+                pos.X = x;
+                cube.transform.position = pos;
+                
                 RegisterGameObject(cube);
             }
         }

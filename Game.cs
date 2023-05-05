@@ -9,6 +9,7 @@ using System.Numerics;
 /// <summary> Program class for game oriented functions </summary>
 public static class Game
 {
+    public static bool drawGrid = true;
     public static int gridSlices = 100;
     public static float gridSpacing = 1;
     public static CameraController cameraController = new CameraController();
@@ -28,7 +29,7 @@ public static class Game
     /// <summary> First update called, used for changing values </summary>
     public static void Update()
     {
-
+        
     }
 
 
@@ -42,7 +43,8 @@ public static class Game
     /// <summary> Third update called, used for rendering game objects</summary>
     public static void DrawUpdate()
     {
-        DrawGrid(gridSlices, gridSpacing);
+        if(drawGrid)
+            DrawGrid(gridSlices, gridSpacing);
     }
 
     /// <summary> Called once at the end of the game </summary>

@@ -13,8 +13,12 @@ public static class SoundEngine
     /// <summary> Starts the audio engine</summary>
     public static void StartAudio()
     {
+        DebugEngine.Log("Starting Sound Engine");
+        
         DebugEngine.Log("Initiated Raylib Audio Device");
         InitAudioDevice();
+
+        DebugEngine.Log("Sound Engine Started");
     }
 
     /// <summary> Stops the audio engine </summary>
