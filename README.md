@@ -11,4 +11,4 @@ Most engine scripts are under the 'Engine' folder, while game specific assets sh
  - [ ] Add game samples?
 
 ## Showcase
-![](https://raw.githubusercontent.com/OlympianGames/OlympianGames/main/assets/github/engine3d/readme_showcase.png)
+![](https://raw.githubusercontent.com/OlympianGames/OlympianGames/main/assets/github/engine3d/5-5-2023_ReadMe_Showcase.png)
