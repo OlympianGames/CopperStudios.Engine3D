@@ -60,5 +60,7 @@ public class CameraController : GameObject
         Program.camera.position = position;
         Program.camera.target = position + targetOffset;
 
+        transform.position = position;
+
     }
 }

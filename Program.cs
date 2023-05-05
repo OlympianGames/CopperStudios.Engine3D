@@ -43,22 +43,19 @@ public static class Program
     public static void Main()
     {
         // Start Process
-        StartEngine();
-        StartGame();
+        Parallel.Invoke(() => StartEngine(), () => StartGame());
         
-        if(EngineStart != null)
-            EngineStart?.Invoke();
+        if(EngineStart != null) EngineStart.Invoke();
 
         engineStartCalled = true;
 
-        if(GameStart != null)
-            GameStart.Invoke();
+        if(GameStart != null) GameStart.Invoke();
 
         gameStartCalled = true;
 
         // The UI Engine is started after everything else so gameobjects can register their own panels
         DebugEngine.Log("Starting UI Engine");
-        UIEngine.StartUI();
+        Parallel.Invoke(() => UIEngine.StartUI());
         DebugEngine.Log("UI Engine Started");
 
 
@@ -217,20 +214,14 @@ public static class Program
             Raylib.SetWindowMinSize(MinimumWindowSize.X, MinimumWindowSize.Y);
             DebugEngine.Log("Raylib Engine Started");
 
-            DebugEngine.Log("Starting Sound Engine");
-            SoundEngine.StartAudio();
-            DebugEngine.Log("Sound Engine Started");
+            DebugEngine.LogImportant($"Started Raylib Components in {timer.Elapsed.ToString(@"m\:ss\.fff")}");   
 
-            DebugEngine.Log("Starting Debug Engine");
-            DebugEngine.StartDebugEngine();
-            DebugEngine.Log("Loading Debug Panels");
-            DebugEngine.LoadDebugPanels(new InfoPanel());
-            DebugEngine.Log("Debug Engine Started");
+            Parallel.Invoke(() => SoundEngine.StartAudio(),
+                    () => DebugEngine.StartDebugEngine(),
+                    () => DebugEngine.LoadDebugPanels(new InfoPanel()));
 
-        
-            DebugEngine.Log("Starting Model Engine");
+            // Doesn't work if loaded at same time
             ModelEngine.StartEngine();
-            DebugEngine.Log("Model Engine Started");
 
             timer.Stop();
             DebugEngine.LogImportant($"Started Engine in {timer.Elapsed.ToString(@"m\:ss\.fff")}");   
@@ -247,17 +238,10 @@ public static class Program
     {
         try
         {
-            UIEngine.StopUI();
-            DebugEngine.Log("Stopped UI Engine");
-
-            SoundEngine.StopAudio();
-            DebugEngine.Log("Stopped Audio Engine");
-
-            DebugEngine.StopDebugEngine();
-            DebugEngine.Log("Stopped Debug Engine");
-
-            ModelEngine.StopEngine();
-            DebugEngine.Log("Stopped Model Engine");
+            Parallel.Invoke(() => UIEngine.StopUI(),
+                    () => SoundEngine.StopAudio(),
+                    () => DebugEngine.StopDebugEngine(),
+                    () => ModelEngine.StopEngine());
 
             CloseWindow();
             DebugEngine.Log("Closed Window");

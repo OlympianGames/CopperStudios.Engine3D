@@ -37,8 +37,12 @@ public class PerlinCubes : GameObject
             {
                 CubePrimitive cube = new CubePrimitive($"Perlin Cube");
                 cubes.Add(cube);
-                cube.transform.position.Z = z;
-                cube.transform.position.X = x;
+
+                Vector3 pos = cube.transform.position;
+                pos.Z = z;
+                pos.X = x;
+                cube.transform.position = pos;
+                
                 RegisterGameObject(cube);
             }
         }

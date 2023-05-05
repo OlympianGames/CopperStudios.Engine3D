@@ -18,6 +18,12 @@ public static class DebugEngine
     /// <summary> Show important logs in the console</summary>
     public static bool ShowImportantLogs = true;
 
+
+    // Data
+    /// <summary> Every line ever written to the console</summary>
+    public static List<string> logLines { get; private set; } = new List<string>();
+
+
     // Debug Panels
     /// <summary> List of debug panels for toggling with a keybind</summary>
     private static List<Panel> DebugPanels = new List<Panel>();
@@ -28,8 +34,12 @@ public static class DebugEngine
     /// <summary> Starting the debug engine </summary>
     public static void StartDebugEngine()
     {
+        DebugEngine.Log("Starting Debug Engine");
+        
         DebugEngine.Log("Connecting Update Action");
         Program.EngineUpdate += DebugEngineUpdate;
+
+        DebugEngine.Log("Debug Engine Started");
     }
 
     /// <summary> Stopping the debug engine </summary>
@@ -53,8 +63,6 @@ public static class DebugEngine
     #endregion
 
     #region Log Writer
-    /// <summary> Every line ever written to the console</summary>
-    private static List<string> lines = new List<string>();
 
     /// <summary> Used for the writing of logs to a file at the end of the game </summary>
     private static void WriteLogs()
@@ -77,10 +85,10 @@ public static class DebugEngine
 
         using(StreamWriter writer = new StreamWriter(filePath))
         {
-            if(lines == null)
+            if(logLines == null)
                 return;
 
-            foreach (var line in lines)
+            foreach (var line in logLines)
             {
                 writer.WriteLine(line);
             }
@@ -107,6 +115,7 @@ public static class DebugEngine
     /// <summary> Adds a new Debug Panel to the lists</summary>
     public static void LoadDebugPanels(Panel panel)
     {
+        DebugEngine.Log($"Loading new Debug Panel");
         DebugPanels.Add(panel);
         UIEngine.AddPanel(panel);
     }
@@ -140,7 +149,7 @@ public static class DebugEngine
     public static void LogImportant(string message)
     {
         if(ShowImportantLogs)
-            WriteConsoleMessage(ConsoleColor.Gray, $"[Engine Log] {message}");
+            WriteConsoleMessage(ConsoleColor.Gray, $"[Important Log] {message}");
     }
 
     /// <summary> Writes a message to the console with a set color </summary>
@@ -149,7 +158,7 @@ public static class DebugEngine
         Console.ForegroundColor = color;
 
         Console.WriteLine(message);
-        lines?.Add(message);
+        logLines.Add(message);
 
         Console.ForegroundColor = ConsoleColor.White;
     }
