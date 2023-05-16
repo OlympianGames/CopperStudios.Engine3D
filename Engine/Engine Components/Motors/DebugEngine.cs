@@ -1,14 +1,14 @@
 using CopperStudios.UI;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using System.Text.Json.Serialization;
 
-namespace CopperStudios.Engine
-{
+namespace CopperStudios.Engine;
 
 /// <summary> Internal engine for debugging </summary>
 public static class DebugEngine
 {   
-    // Logs Settings
+    // Logs Settings 
     /// <summary> Show logs in the console</summary>
     public static bool ShowLogs = true;
     /// <summary> Show error logs in the console</summary>
@@ -125,45 +125,83 @@ public static class DebugEngine
     #region Logs
 
     /// <summary> Write a log the the console </summary>
-    public static void Log(string message)
+    public static void Log(string message = "", bool showTitle = true)
     {
         if(ShowLogs)
-            WriteConsoleMessage(ConsoleColor.DarkGray, $"[Engine Log] {message}");
+            WriteConsoleMessage(new LogData("[Log]", message, ConsoleColor.DarkGray, showTitle));
     }
 
     /// <summary> Write a error to the console</summary>
-    public static void LogError(string message)
+    public static void LogError(string message = "", bool showTitle = true)
     {
         if(ShowErrorsLogs)
-            WriteConsoleMessage(ConsoleColor.Red, $"[Engine Error] {message}");
+            WriteConsoleMessage(new LogData("[Error]", message, ConsoleColor.Red, showTitle));
     }
 
     /// <summary> Write a warning to the console </summary>
-    public static void LogWarning(string message)
+    public static void LogWarning(string message = "", bool showTitle = true)
     {
         if(ShowWarningLogs)
-            WriteConsoleMessage(ConsoleColor.Yellow, $"[Engine Warning] {message}");
+            WriteConsoleMessage(new LogData("[Warning]", message, ConsoleColor.Yellow, showTitle));
     }
 
     /// <summary> Writes an important log to the console </summary>
-    public static void LogImportant(string message)
+    public static void LogImportant(string message = "", bool showTitle = true)
     {
         if(ShowImportantLogs)
-            WriteConsoleMessage(ConsoleColor.Gray, $"[Important Log] {message}");
+            WriteConsoleMessage(new LogData("[Important]", message, ConsoleColor.Gray, showTitle));
     }
 
-    /// <summary> Writes a message to the console with a set color </summary>
-    private static void WriteConsoleMessage(ConsoleColor color, string message)
+    /// <summary> Writes a message to the console via a LogData input class </summary>
+    public static void WriteConsoleMessage(LogData data)
     {
-        Console.ForegroundColor = color;
+        Console.ForegroundColor = data.color;
 
+        string message = data.GetMessage();
         Console.WriteLine(message);
         logLines.Add(message);
 
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-    #endregion
-}
+    /// <summary> Data class for custom log messages via the Debug Engine</summary>
+    [System.Serializable]
+    public class LogData
+    {
+        
+        /// <summary> Title for the log. First thing shown in the log as '[title] message' </summary>
+        public string title { get; set; } = "";
+        /// <summary> Actual message for the log. Second thing shown in the log as '[title] message' </summary>
+        public string message { get; set; } = "";
+        /// <summary> If enabled, the title will actually be logged </summary>
+        public bool showTitle { get; set; } = true;
+        /// <summary> Color of the console message </summary>
+        public ConsoleColor color { get; set; } = ConsoleColor.White;
 
+        /// <summary> Empty constructor </summary>
+        public LogData() {}
+
+        /// <summary> Full constructor </summary>
+        [JsonConstructor]
+        public LogData(string title, string message, ConsoleColor color, bool showTitle = true)
+        {
+            this.color = color;
+            this.title = title;
+            this.message = message;
+            this.showTitle = showTitle;
+        }
+
+        /// <summary> Gets the log message for the Debug Engine to actually log </summary>
+        public string GetMessage()
+        {
+            if(string.IsNullOrEmpty(message))
+                return "";
+            else if(!showTitle)
+                return message;
+            else
+                return $"{title} {message}";
+        }
+    }
+
+    #endregion
 }
